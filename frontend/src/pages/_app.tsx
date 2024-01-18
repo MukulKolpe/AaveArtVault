@@ -2,6 +2,23 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import Navbar from "@/components/Navbar";
+import { WagmiConfig, createConfig } from "wagmi";
+import {
+  ConnectKitProvider,
+  ConnectKitButton,
+  getDefaultConfig,
+} from "connectkit";
+
+const connectkitConfig = createConfig(
+  getDefaultConfig({
+    alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_ID,
+    walletConnectProjectId: process.env.NEXT_PUBLIC_PROJECT_ID || "",
+    appName: "LFGHO",
+    appDescription: "Your App Description",
+    appUrl: "https://family.co", // your app's url
+    appIcon: "https://family.co/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
+  })
+);
 
 const colors = {
   brand: {
@@ -27,8 +44,12 @@ const theme = extendTheme({ colors, config });
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <Navbar />
-      <Component {...pageProps} />
+      <WagmiConfig config={connectkitConfig}>
+        <ConnectKitProvider>
+          <Navbar />
+          <Component {...pageProps} />
+        </ConnectKitProvider>
+      </WagmiConfig>
     </ChakraProvider>
   );
 }
