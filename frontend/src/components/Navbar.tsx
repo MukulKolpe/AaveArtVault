@@ -24,9 +24,12 @@ import {
 } from "@chakra-ui/icons";
 
 import { Link } from "@chakra-ui/next-js";
+import { ConnectKitButton } from "connectkit";
+import { useAccount } from "wagmi";
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isDisconnected } = useAccount();
 
   return (
     <>
@@ -57,23 +60,25 @@ export default function Navbar() {
           <Flex alignItems={"center"}>
             <div style={{ display: "flex" }}>
               <>
-                <HStack
-                  as={"nav"}
-                  spacing={4}
-                  display={{ base: "none", md: "flex" }}
-                  marginRight={4}
-                >
-                  <Link href="/create-loan">
-                    <Button w="full" variant="ghost">
-                      Create Loan
-                    </Button>
-                  </Link>
-                </HStack>
+                {!isDisconnected && (
+                  <HStack
+                    as={"nav"}
+                    spacing={4}
+                    display={{ base: "none", md: "flex" }}
+                    marginRight={4}
+                  >
+                    <Link href="/create-loan">
+                      <Button w="full" variant="ghost">
+                        Create Loan
+                      </Button>
+                    </Link>
+                  </HStack>
+                )}
               </>
 
-              {/* <HStack>
-                <ConnectButton />
-              </HStack> */}
+              <HStack>
+                <ConnectKitButton />
+              </HStack>
             </div>
           </Flex>
         </Flex>
