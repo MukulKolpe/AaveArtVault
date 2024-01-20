@@ -61,18 +61,32 @@ export default function Navbar() {
             <div style={{ display: "flex" }}>
               <>
                 {!isDisconnected && (
-                  <HStack
-                    as={"nav"}
-                    spacing={4}
-                    display={{ base: "none", md: "flex" }}
-                    marginRight={4}
-                  >
-                    <Link href="/create-loan">
-                      <Button w="full" variant="ghost">
-                        Create Loan
-                      </Button>
-                    </Link>
-                  </HStack>
+                  <>
+                    <HStack
+                      as={"nav"}
+                      spacing={4}
+                      display={{ base: "none", md: "flex" }}
+                      marginRight={4}
+                    >
+                      <Link href="/mint-nft">
+                        <Button w="full" variant="ghost">
+                          Mint NFT
+                        </Button>
+                      </Link>
+                    </HStack>
+                    <HStack
+                      as={"nav"}
+                      spacing={4}
+                      display={{ base: "none", md: "flex" }}
+                      marginRight={4}
+                    >
+                      <Link href="/create-loan">
+                        <Button w="full" variant="ghost">
+                          Create Loan
+                        </Button>
+                      </Link>
+                    </HStack>
+                  </>
                 )}
               </>
 
@@ -86,6 +100,11 @@ export default function Navbar() {
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
+              <Link href="/mint-nft">
+                <Button w="full" variant="ghost">
+                  Mint NFT
+                </Button>
+              </Link>
               <Link href="/create-loan">
                 <Button w="full" variant="ghost">
                   Create Loan
