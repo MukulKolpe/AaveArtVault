@@ -11,7 +11,7 @@ contract LoanManager {
 
     mapping(address => address[]) public borrowerLoans;
     mapping(address => bool) public activeLoans;
-    mapping(address => address[]) public allLoans; // Mapping to display all created loans
+    address[] public allLoans; // Mapping to display all created loans
 
     event LoanCreated(address indexed borrower, address loanContract);
 
@@ -45,12 +45,21 @@ contract LoanManager {
 
         // Create Aave-backed LoanContract
         address loanContract = address(
-            new Loans(loanAmount, interestRate, _nft, _nftid, loanExpiration)
+            new Loans(
+                msg.sender,
+                address(this),
+                loanAmount,
+                interestRate,
+                _nft,
+                _nftid,
+                loanExpiration
+            )
         );
 
         borrowerLoans[msg.sender].push(loanContract);
         activeLoans[msg.sender] = true;
-        allLoans[msg.sender].push(loanContract); // Add the loan to the mapping
+        nftContract.transferFrom(address(this), loanContract, _nftid);
+        allLoans.push(loanContract); // Add the loan to the mapping
         emit LoanCreated(msg.sender, loanContract);
     }
 
@@ -58,13 +67,7 @@ contract LoanManager {
         return borrowerLoans[msg.sender];
     }
 
-    function setActiveLoans(address borrower, bool status) external onlyOwner {
+    function setActiveLoans(address borrower, bool status) external {
         activeLoans[borrower] = status;
-    }
-
-    function getAllLoans(
-        address borrower
-    ) external view returns (address[] memory) {
-        return allLoans[borrower];
     }
 }

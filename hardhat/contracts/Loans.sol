@@ -16,7 +16,7 @@ contract Loans {
     address public collateralNFT;
     address public lender;
     uint256 public NFTId;
-    LoanManager public loanManager;
+    address public loanManager;
 
     IPoolAddressesProvider public ADDRESSES_PROVIDER =
         IPoolAddressesProvider(0x012bAC54348C0E635dCAc9D5FB99f06F24136C9A);
@@ -55,13 +55,16 @@ contract Loans {
     }
 
     constructor(
+        address _borrower,
+        address _loanManager,
         uint256 _loanAmount,
         uint256 _interestRate,
         address _nft,
         uint256 _nftid,
         uint256 _loanExpiration
     ) {
-        borrower = msg.sender;
+        borrower = _borrower;
+        loanManager = _loanManager;
         loanAmount = _loanAmount;
         remainingAmount = _loanAmount;
         interestRate = _interestRate;
