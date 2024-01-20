@@ -2,6 +2,16 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_borrower",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_loanManager",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "_loanAmount",
         "type": "uint256"
@@ -223,7 +233,7 @@
     "name": "loanManager",
     "outputs": [
       {
-        "internalType": "contract LoanManager",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
