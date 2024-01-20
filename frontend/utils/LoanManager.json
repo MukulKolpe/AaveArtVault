@@ -1,5 +1,38 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "loanAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "interestRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_nft",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_nftid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "loanExpiration",
+        "type": "uint256"
+      }
+    ],
+    "name": "createLoan",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -27,6 +60,24 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "borrower",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "status",
+        "type": "bool"
+      }
+    ],
+    "name": "setActiveLoans",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -44,11 +95,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
       {
         "internalType": "uint256",
         "name": "",
@@ -91,58 +137,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "loanAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "interestRate",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_nft",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_nftid",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "loanExpiration",
-        "type": "uint256"
-      }
-    ],
-    "name": "createLoan",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      }
-    ],
-    "name": "getAllLoans",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "getBorrowerLoans",
     "outputs": [
@@ -166,24 +160,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "status",
-        "type": "bool"
-      }
-    ],
-    "name": "setActiveLoans",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

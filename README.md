@@ -1,12 +1,15 @@
 ## LFGHO
 
-## *Deployed Contract Addresses*
+## _Deployed Contract Addresses_
 
 #### LoanManager.sol :-
+
 ```
-0xDf0Bf790c0A7BfaE81340263Fd8392154c2B4c48
+0x03C8823466d5f3D7454d47baA31AD092965edBc7
 ```
-#### NFT.sol :- 
+
+#### NFT.sol :-
+
 ```
 0x3b47042A391e5ab3722dD8eD5647c072cC05a40f
 ```
