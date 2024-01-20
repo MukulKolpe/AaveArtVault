@@ -32,11 +32,14 @@ import {
 
 import { useToast } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
+// @ts-ignore
+import { ethers } from "ethers";
+import NftAbi from "../../../utils/NFT.json";
 
 const UploadArt = () => {
   const toast = useToast();
   const inputRef = useRef(null);
-  const [displayImage, setDisplayImage] = useState();
+  const [displayImage, setDisplayImage] = useState<File | null>(null);
   const [ipfsUrl, setIpfsUrl] = useState("");
   const changeHandler = () => {
     setDisplayImage(inputRef.current?.files[0]);
@@ -81,6 +84,27 @@ const UploadArt = () => {
         }
       })
       .catch((err) => console.error(err));
+  };
+  const mintNft = async () => {
+    // @ts-ignore
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      "0x3b47042A391e5ab3722dD8eD5647c072cC05a40f",
+      NftAbi,
+      signer
+    );
+
+    const tx = await contract.mintProperty(ipfsUrl);
+    await tx.wait();
+    toast({
+      title: "NFT Minted!",
+      description: "NFT Minted Successfully!",
+      status: "success",
+      duration: 1000,
+      isClosable: true,
+      position: "top-right",
+    });
   };
   return (
     <>
@@ -194,8 +218,9 @@ const UploadArt = () => {
           </FormControl>
           <Button onClick={uploadIPFS}>
             {ipfsUrl ? "Uploaded Successfully" : "Upload to IPFS"}
-            <CheckIcon marginLeft={2} />
+            {ipfsUrl && <CheckIcon marginLeft={2} />}
           </Button>
+          {ipfsUrl && <Button onClick={mintNft}>Mint NFT</Button>}
         </SimpleGrid>
       </Box>
     </>
