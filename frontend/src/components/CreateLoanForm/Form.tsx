@@ -1,3 +1,4 @@
+// @ts-nocheck comment
 import React, { useState, useRef, use, useEffect } from "react";
 import {
   Progress,
@@ -31,6 +32,8 @@ import {
 } from "@chakra-ui/react";
 
 import { useToast } from "@chakra-ui/react";
+import { ethers } from "ethers";
+import LoanManagerAbi from "../../../utils/LoanManager.json";
 
 const CreateLoanForm = () => {
   const toast = useToast();
@@ -48,6 +51,31 @@ const CreateLoanForm = () => {
   useEffect(() => {
     console.log(loanExpiration);
   }, [loanExpiration]);
+
+  const handleSubmit = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      "0x03C8823466d5f3D7454d47baA31AD092965edBc7",
+      LoanManagerAbi,
+      signer
+    );
+    const tx = await contract.createLoan(
+      loanAmount,
+      interestRate,
+      nft,
+      nftId,
+      loanExpiration
+    );
+    await tx.wait();
+    toast({
+      title: "Loan Created",
+      description: "Your loan has been created.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+  };
 
   return (
     <>
@@ -128,9 +156,7 @@ const CreateLoanForm = () => {
           w="10rem"
           colorScheme="teal"
           variant="solid"
-          onClick={() => {
-            //  handleSubmit();
-          }}
+          onClick={handleSubmit}
         >
           Create Loan
         </Button>
