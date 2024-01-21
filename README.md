@@ -5,7 +5,7 @@
 #### LoanManager.sol :-
 
 ```
-0x5A338E380Cb541b825f49901050cC9C862d39Ccf
+0x854913Dc6C0e978E77F6290D217fC816ba404cc6
 ```
 
 #### NFT.sol :-
