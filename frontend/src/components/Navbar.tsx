@@ -55,7 +55,7 @@ export default function Navbar() {
             ml="2"
             color="brand.00"
           >
-            <Link href="/">LFGHO</Link>
+            <Link href="/">AaveArtVault</Link>
           </HStack>
           <Flex alignItems={"center"}>
             <div style={{ display: "flex" }}>
