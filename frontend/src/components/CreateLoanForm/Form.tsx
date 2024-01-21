@@ -88,7 +88,7 @@ const CreateLoanForm = () => {
       signer
     );
     const tx = await contract.createLoan(
-      loanAmount,
+      ethers.utils.parseEther(loanAmount.toString(), 18),
       interestRate,
       nft,
       nftId,
