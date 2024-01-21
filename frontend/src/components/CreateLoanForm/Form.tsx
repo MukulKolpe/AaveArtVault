@@ -34,6 +34,7 @@ import {
 import { useToast } from "@chakra-ui/react";
 import { ethers } from "ethers";
 import LoanManagerAbi from "../../../utils/LoanManager.json";
+import NFTAbi from "../../../utils/NFT.json";
 
 const CreateLoanForm = () => {
   const toast = useToast();
@@ -42,6 +43,7 @@ const CreateLoanForm = () => {
   const [nft, setNft] = useState("");
   const [nftId, setNftId] = useState("");
   const [loanExpiration, setLoanExpiration] = useState("");
+  const [nftTransfered, setNftTransfered] = useState(false);
 
   const convertToEpoch = (dateString: any) => {
     const epochValue = new Date(dateString + "T00:00:00Z").getTime() / 1000;
@@ -51,6 +53,31 @@ const CreateLoanForm = () => {
   useEffect(() => {
     console.log(loanExpiration);
   }, [loanExpiration]);
+
+  const transferNFT = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      "0x3b47042A391e5ab3722dD8eD5647c072cC05a40f",
+      NFTAbi,
+      signer
+    );
+
+    const tx = await contract.transferFrom(
+      signer.getAddress(),
+      "0x5A338E380Cb541b825f49901050cC9C862d39Ccf",
+      nftId
+    );
+    await tx.wait();
+    setNftTransfered(true);
+    toast({
+      title: "NFT Transferred",
+      description: "Your NFT has been transferred.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+  };
 
   const handleSubmit = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -148,18 +175,15 @@ const CreateLoanForm = () => {
               }}
             />
           </FormControl>
+          <Button colorScheme="teal" variant="solid" onClick={transferNFT}>
+            Transfer Collateral
+          </Button>
+          {nftTransfered && (
+            <Button colorScheme="teal" variant="solid" onClick={handleSubmit}>
+              Create Loan
+            </Button>
+          )}
         </SimpleGrid>
-        <Button
-          display="block"
-          mx="auto"
-          mt={6}
-          w="10rem"
-          colorScheme="teal"
-          variant="solid"
-          onClick={handleSubmit}
-        >
-          Create Loan
-        </Button>
       </Box>
     </>
   );

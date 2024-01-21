@@ -42,6 +42,7 @@ const UploadArt = () => {
   const inputRef = useRef(null);
   const [displayImage, setDisplayImage] = useState<File | null>(null);
   const [ipfsUrl, setIpfsUrl] = useState("");
+  const [minted, setMinted] = useState(false);
   const changeHandler = () => {
     // @ts-ignore
     setDisplayImage(inputRef.current?.files[0]);
@@ -99,6 +100,7 @@ const UploadArt = () => {
 
     const tx = await contract.mintProperty(ipfsUrl);
     await tx.wait();
+    setMinted(true);
     toast({
       title: "NFT Minted!",
       description: "NFT Minted Successfully!",
@@ -219,10 +221,15 @@ const UploadArt = () => {
             </Flex>
           </FormControl>
           <Button onClick={uploadIPFS}>
-            {ipfsUrl ? "Uploaded Successfully" : "Upload to IPFS"}
+            {ipfsUrl ? "Uploaded Successfully!" : "Upload to IPFS"}
             {ipfsUrl && <CheckIcon marginLeft={2} />}
           </Button>
-          {ipfsUrl && <Button onClick={mintNft}>Mint NFT</Button>}
+          {ipfsUrl && (
+            <Button onClick={mintNft}>
+              {minted ? "NFT minted successfully!" : "Mint NFT"}
+              {minted && <CheckIcon marginLeft={2} />}
+            </Button>
+          )}
         </SimpleGrid>
       </Box>
     </>
