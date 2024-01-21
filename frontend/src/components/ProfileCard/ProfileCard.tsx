@@ -168,7 +168,7 @@ const ProfileCard = ({ loan }) => {
       >
         <Heading marginTop="1">
           <Text textDecoration="none" _hover={{ textDecoration: "none" }}>
-            Loan Amount: ${Number(loan.loanAmt)}
+            Loan Amount: ${Number(loan.loanAmt) / 1e18}
           </Text>
         </Heading>
         <Text
@@ -219,9 +219,11 @@ const ProfileCard = ({ loan }) => {
           color={useColorModeValue("gray.700", "gray.200")}
           fontSize="lg"
         >
-          Currently Owned By:{" "}
+          Owner:{" "}
           {loan.loanContractAdd == loan.nftOwnerAdd ? (
             <>Owned By Platform</>
+          ) : loan.nftOwnerAdd == loan.loanLender ? (
+            <>Owned By Lender</>
           ) : (
             <>Owned By you</>
           )}
