@@ -46,6 +46,11 @@ contract Loans {
         _;
     }
 
+    modifier loanExpired() {
+        require(block.timestamp >= loanExpiration, "Loan has expired");
+        _;
+    }
+
     modifier checkGhoAllowance(uint amount) {
         require(
             IERC20(GHO_TOKEN).allowance(msg.sender, address(this)) >= amount,
@@ -73,7 +78,7 @@ contract Loans {
         loanExpiration = _loanExpiration; // User-selected expiration date
     }
 
-    function checkAndTransferCollateral() external loanNotExpired {
+    function checkAndTransferCollateral() external loanExpired {
         require(remainingAmount > 0, "Loan is fully paid");
         // Transfer collateral to the lender
         IERC721(collateralNFT).transferFrom(address(this), lender, NFTId);
@@ -92,6 +97,7 @@ contract Loans {
         );
         IERC20(GHO_TOKEN).transfer(_lender, ghobalance);
         IERC721(collateralNFT).transferFrom(address(this), borrower, NFTId);
+        LoanManager(loanManager).setActiveLoans(borrower, false);
     }
 
     function approvedai() external returns (bool) {
