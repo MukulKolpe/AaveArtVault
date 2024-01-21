@@ -176,7 +176,9 @@ const CreateLoanForm = () => {
             />
           </FormControl>
           <Button colorScheme="teal" variant="solid" onClick={transferNFT}>
-            Transfer Collateral
+            {nftTransfered
+              ? "Collateral Transferred Successfully!"
+              : "Transfer Collateral"}
           </Button>
           {nftTransfered && (
             <Button colorScheme="teal" variant="solid" onClick={handleSubmit}>

@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer/Footer";
 import { WagmiConfig, createConfig } from "wagmi";
 import { sepolia } from "wagmi/chains";
 import {
@@ -50,8 +51,17 @@ export default function App({ Component, pageProps }: AppProps) {
     <ChakraProvider theme={theme}>
       <WagmiConfig config={connectkitConfig}>
         <ConnectKitProvider>
-          <Navbar />
-          <Component {...pageProps} />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "100vh",
+            }}
+          >
+            <Navbar />
+            <Component {...pageProps} />
+            <Footer />
+          </div>
         </ConnectKitProvider>
       </WagmiConfig>
     </ChakraProvider>
