@@ -86,6 +86,30 @@ export default function Navbar() {
                         </Button>
                       </Link>
                     </HStack>
+                    <HStack
+                      as={"nav"}
+                      spacing={4}
+                      display={{ base: "none", md: "flex" }}
+                      marginRight={4}
+                    >
+                      <Link href="/loans">
+                        <Button w="full" variant="ghost">
+                          Loans
+                        </Button>
+                      </Link>
+                    </HStack>
+                    <HStack
+                      as={"nav"}
+                      spacing={4}
+                      display={{ base: "none", md: "flex" }}
+                      marginRight={4}
+                    >
+                      <Link href="/profile">
+                        <Button w="full" variant="ghost">
+                          Profile
+                        </Button>
+                      </Link>
+                    </HStack>
                   </>
                 )}
               </>
@@ -108,6 +132,16 @@ export default function Navbar() {
               <Link href="/create-loan">
                 <Button w="full" variant="ghost">
                   Create Loan
+                </Button>
+              </Link>
+              <Link href="/loans">
+                <Button w="full" variant="ghost">
+                  Loans
+                </Button>
+              </Link>
+              <Link href="/profile">
+                <Button w="full" variant="ghost">
+                  Profile
                 </Button>
               </Link>
             </Stack>
