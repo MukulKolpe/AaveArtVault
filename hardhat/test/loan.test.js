@@ -85,7 +85,6 @@ describe("LoanManager and Loans Contracts", function () {
     );
 
     const loanamount = await loanContract.loanAmount();
-    console.log("loanamount is + ", loanamount.toString());
 
     const pool = await loanContract.POOL();
     console.log("pool is + ", pool);
@@ -104,10 +103,8 @@ describe("LoanManager and Loans Contracts", function () {
       pool,
       ethers.constants.MaxUint256
     );
-    console.log("approve is + ", approve);
 
     const allowance = await daiContract.allowance(DAI_HOLDER, pool);
-    console.log("allowance is + ", allowance.toString());
 
     const variableDebtToken = await ethers.getContractAt(
       "IVariableDebtToken",
@@ -122,12 +119,7 @@ describe("LoanManager and Loans Contracts", function () {
         ethers.utils.parseEther("10", 18)
       );
 
-    console.log("approveDelegation is + ", approveDelegation);
     await approveDelegation.wait(1);
-
-    const tx4 = await loanContract.getUserAccountData(signer._address);
-
-    console.log("tx4 is + ", tx4.availableBorrowsBase.toString());
   });
 });
 

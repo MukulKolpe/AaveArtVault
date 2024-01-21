@@ -244,7 +244,7 @@ const CardComponent = ({ address }) => {
               onClick={delegateCredit}
               mb={4}
             >
-              Step 3: Delgiate Credit
+              Step 3: Delegate Credit
             </Button>
             {daiDelegated && (
               <Text fontWeight={500} fontFamily={"body"}>

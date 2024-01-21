@@ -19,12 +19,12 @@ contract Loans {
     address public loanManager;
 
     IPoolAddressesProvider public ADDRESSES_PROVIDER =
-        IPoolAddressesProvider(0x012bAC54348C0E635dCAc9D5FB99f06F24136C9A);
+        IPoolAddressesProvider(0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e);
     IVariableDebtToken public sGho =
-        IVariableDebtToken(0x67ae46EF043F7A4508BD1d6B94DB6c33F0915844);
+        IVariableDebtToken(0x786dBff3f1292ae8F92ea68Cf93c30b34B1ed04B);
     IPool public POOL = IPool(ADDRESSES_PROVIDER.getPool());
-    address private daiAddress = 0xFF34B3d4Aee8ddCd6F9AFFFB6Fe49bD371b8a357;
-    address public GHO_TOKEN = 0xc4bF5CbDaBE595361438F8c6a187bDc330539c60;
+    address private daiAddress = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+    address public GHO_TOKEN = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
     IERC20 private dai = IERC20(daiAddress);
 
     mapping(address => uint256) public paidInstallments;

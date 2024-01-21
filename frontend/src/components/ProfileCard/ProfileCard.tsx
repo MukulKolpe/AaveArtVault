@@ -185,7 +185,7 @@ const ProfileCard = ({ loan }) => {
           color={useColorModeValue("gray.700", "gray.200")}
           fontSize="lg"
         >
-          Remaining Amount: ${Number(loan.remLoanAmt)}
+          Remaining Amount: ${loan.remLoanAmt / 1e18}
         </Text>
         <Text
           as="p"
