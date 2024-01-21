@@ -56,7 +56,7 @@ const CreateLoanForm = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(
-      "0x03C8823466d5f3D7454d47baA31AD092965edBc7",
+      "0x5A338E380Cb541b825f49901050cC9C862d39Ccf",
       LoanManagerAbi,
       signer
     );
