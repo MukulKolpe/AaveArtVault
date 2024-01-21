@@ -129,7 +129,7 @@ const Profile = () => {
       const nftOwnerAddress = await nftContractInstance.ownerOf(loanNftId);
       console.log("Owner of NFT: " + nftOwnerAddress);
       const nftImgIpfsUri = await nftContractInstance.tokenURI(loanNftId);
-      console.logt("Ipfs URI of collateral NFT: " + nftImgIpfsUri);
+      console.log("Ipfs URI of collateral NFT: " + nftImgIpfsUri);
       const isActive = await contractInstance.activeLoans(address);
       console.log("Is Loan Active: " + isActive);
       setLoans((prevState) => [
@@ -153,7 +153,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    return () => loadBorrowedLoans();
+    loadBorrowedLoans();
   }, []);
 
   return (
