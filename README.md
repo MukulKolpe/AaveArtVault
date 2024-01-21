@@ -1,4 +1,4 @@
-## LFGHO - AaveArtVault🚀
+## LFGHO - AaveArtVault 🚀
 
 ## Introduction :fire:
 Revolutionizing art finance, our platform pioneers NFT collateralization with GHO tokens on Aave, empowering creators through decentralized lending.
@@ -20,7 +20,7 @@ Revolutionizing art finance, our platform pioneers NFT collateralization with GH
 <li>WalletConnect</li>
 <li>Wagmi</li>
 
-## High-Level Architectural Diagram 📔
+## High-Level Architectural Diagram 📓
 
 ![Final Export](https://github.com/MukulKolpe/LFGHO/assets/78664749/79ab0057-68b9-4cfb-a55f-6f7225d83a50)
 
@@ -75,7 +75,7 @@ touch .env
  ```
 
 
-## _Deployed Contract Addresses_
+## _Deployed Contract Addresses_ 📜
 
 #### LoanManager.sol :-
 
