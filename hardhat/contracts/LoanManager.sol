@@ -70,4 +70,8 @@ contract LoanManager {
     function setActiveLoans(address borrower, bool status) external {
         activeLoans[borrower] = status;
     }
+
+    function getAllLoansLength() external view returns (uint256) {
+        return allLoans.length;
+    }
 }
