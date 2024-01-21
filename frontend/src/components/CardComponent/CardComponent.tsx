@@ -315,7 +315,7 @@ const CardComponent = ({ address }) => {
           <Box p={6}>
             <Stack spacing={0} align={"center"} mb={5}>
               <Text fontWeight={500} fontFamily={"body"}>
-                Loan Amount $ {ethers.utils.formatEther(amount)}
+                Loan Amount $ {amount / 1e18}
               </Text>
             </Stack>
 
