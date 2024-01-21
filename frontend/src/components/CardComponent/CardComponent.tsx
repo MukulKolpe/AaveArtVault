@@ -23,7 +23,9 @@ import {
   useToast,
   Tooltip,
   VStack,
+  Link,
 } from "@chakra-ui/react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Modal,
   ModalOverlay,
@@ -57,12 +59,51 @@ const CardComponent = ({ address }) => {
   const [daiDelegated, setDaiDelegated] = useState(false);
   const [isLendLoan, setisLendLoan] = useState(false);
   const [isLendLoanHash, setisLendLoanHash] = useState("");
+  const [lenderFlag, setLenderFlag] = useState(false);
+  const [nftId, setNftId] = useState(-1);
+  const nftContractAddress = "0x3b47042A391e5ab3722dD8eD5647c072cC05a40f";
 
   const { address: userAddress } = useAccount();
 
   const handleNextStep = () => {
     setCurrentStep((prevStep) => prevStep + 1);
   };
+
+  const checkLender = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const loanContract = new ethers.Contract(address, LoansAbi, signer);
+    console.log(loanContract);
+    const tempLender = await loanContract.lender();
+    console.log(`Comparision: ${userAddress} and ${tempLender}`);
+    if (userAddress == tempLender) {
+      setLenderFlag(true);
+    }
+    const tempNftId = await loanContract.NFTId();
+    console.log("NFT Id is: " + tempNftId);
+    setNftId(tempNftId);
+  };
+
+  const claimNFT = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const loanContract = new ethers.Contract(address, LoansAbi, signer);
+    console.log(loanContract);
+    const tx = await loanContract.checkAndTransferCollateral();
+    await tx.wait();
+    toast({
+      title: "NFT Transferred",
+      description:
+        "The borrower's collateral NFT is transferred to your account",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+  };
+
+  useEffect(() => {
+    return () => checkLender();
+  }, []);
 
   const tranferDAI = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -338,6 +379,40 @@ const CardComponent = ({ address }) => {
               </Text>
             </Stack>
 
+            <Flex>
+              <Button
+                w={"full"}
+                mt={8}
+                bg={useColorModeValue("#151f21", "gray.900")}
+                color={"white"}
+                rounded={"md"}
+                _hover={{
+                  transform: "translateY(-2px)",
+                  boxShadow: "lg",
+                }}
+                mr={2}
+                onClick={() => handleSizeClick("xl")}
+              >
+                Lend Loan
+              </Button>
+              {lenderFlag && (
+                <Button
+                  w={"full"}
+                  mt={8}
+                  bg={useColorModeValue("#151f21", "gray.900")}
+                  color={"white"}
+                  rounded={"md"}
+                  _hover={{
+                    transform: "translateY(-2px)",
+                    boxShadow: "lg",
+                  }}
+                  ml={2}
+                  onClick={claimNFT}
+                >
+                  Claim NFT
+                </Button>
+              )}
+            </Flex>
             <Button
               w={"full"}
               mt={8}
@@ -348,9 +423,13 @@ const CardComponent = ({ address }) => {
                 transform: "translateY(-2px)",
                 boxShadow: "lg",
               }}
-              onClick={() => handleSizeClick("xl")}
             >
-              Lend Loan
+              <Link
+                href={`https://sepolia.etherscan.io/nft/${nftContractAddress}/${nftId}`}
+                isExternal
+              >
+                View NFT <ExternalLinkIcon mx="2px" />
+              </Link>
             </Button>
             <Modal isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
