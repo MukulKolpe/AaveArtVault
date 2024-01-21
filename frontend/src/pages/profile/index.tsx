@@ -22,6 +22,7 @@ import {
   VStack,
   Center,
 } from "@chakra-ui/react";
+import { useAccount } from "wagmi";
 
 interface IBlogTags {
   tags: Array<string>;
@@ -72,6 +73,7 @@ const BlogAuthor = (props: BlogAuthorProps) => {
 
 const Profile = () => {
   const [loans, setLoans] = useState([]);
+  const { address } = useAccount();
 
   function convertEpochToStandardTime(epochTime) {
     // Create a new Date object from the epoch time
@@ -126,9 +128,9 @@ const Profile = () => {
       console.log(nftContractInstance);
       const nftOwnerAddress = await nftContractInstance.ownerOf(loanNftId);
       console.log("Owner of NFT: " + nftOwnerAddress);
-      const nftImgIpfsUri = await nftContractInstance.tokenURI(5);
+      const nftImgIpfsUri = await nftContractInstance.tokenURI(loanNftId);
       console.log("Ipfs URI of collateral NFT: " + nftImgIpfsUri);
-      const isActive = await contractInstance.activeLoans(res[i]);
+      const isActive = await contractInstance.activeLoans(address);
       console.log("Is Loan Active: " + isActive);
       setLoans((prevState) => [
         ...prevState,

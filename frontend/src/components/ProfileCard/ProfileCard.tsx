@@ -166,11 +166,6 @@ const ProfileCard = ({ loan }) => {
         justifyContent="center"
         marginTop={{ base: "3", sm: "0" }}
       >
-        {loan.isActive ? (
-          <BlogTags tags={["Active"]} />
-        ) : (
-          <BlogTags tags={["Inactive"]} />
-        )}
         <Heading marginTop="1">
           <Text textDecoration="none" _hover={{ textDecoration: "none" }}>
             Loan Amount: ${Number(loan.loanAmt)}
@@ -239,12 +234,12 @@ const ProfileCard = ({ loan }) => {
             View NFT <ExternalLinkIcon mx="2px" />
           </Link>
         </Button>
-        {!loan.isActive && !approvalFlag && (
+        {!approvalFlag && (
           <Button onClick={approveGho} mt={2}>
             Approve GHO
           </Button>
         )}
-        {!loan.isActive && approvalFlag && (
+        {approvalFlag && (
           <Button onClick={makePayment} mt={2}>
             Pay Now
           </Button>
