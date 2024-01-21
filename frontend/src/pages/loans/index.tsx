@@ -41,9 +41,7 @@ export default function Loans() {
         setLoans((loans) => [...loans, loan]);
       }
     };
-    return () => {
-      getLoans();
-    };
+    getLoans();
   }, []);
 
   return (
