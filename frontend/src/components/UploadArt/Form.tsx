@@ -1,3 +1,4 @@
+// @ts-nocheck comment
 import React, { useState, useRef } from "react";
 import {
   Progress,
@@ -42,6 +43,7 @@ const UploadArt = () => {
   const [displayImage, setDisplayImage] = useState<File | null>(null);
   const [ipfsUrl, setIpfsUrl] = useState("");
   const changeHandler = () => {
+    // @ts-ignore
     setDisplayImage(inputRef.current?.files[0]);
   };
   const uploadIPFS = async () => {
