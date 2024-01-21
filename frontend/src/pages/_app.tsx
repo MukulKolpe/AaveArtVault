@@ -24,7 +24,7 @@ const connectkitConfig = createConfig(
     chains,
   })
 );
-
+import Head from "next/head";
 const colors = {
   brand: {
     50: "#ecefff",
@@ -48,22 +48,28 @@ const theme = extendTheme({ colors, config });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
-      <WagmiConfig config={connectkitConfig}>
-        <ConnectKitProvider>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              minHeight: "100vh",
-            }}
-          >
-            <Navbar />
-            <Component {...pageProps} />
-            <Footer />
-          </div>
-        </ConnectKitProvider>
-      </WagmiConfig>
-    </ChakraProvider>
+    <>
+      <Head>
+        <title>AaveArtVault</title>
+        <meta name="description" content="AaveArtVault" />
+      </Head>
+      <ChakraProvider theme={theme}>
+        <WagmiConfig config={connectkitConfig}>
+          <ConnectKitProvider>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
+              }}
+            >
+              <Navbar />
+              <Component {...pageProps} />
+              <Footer />
+            </div>
+          </ConnectKitProvider>
+        </WagmiConfig>
+      </ChakraProvider>
+    </>
   );
 }
