@@ -114,6 +114,8 @@ const Profile = () => {
       console.log("Loan Expiration Date: " + normalTime);
       const intrestRate = await loanContractInstance.interestRate();
       console.log("Intrest Rate: " + intrestRate);
+      const loanLender = await loanContractInstance.lender();
+      console.log("lender is: " + loanLender);
       const remAmt = await loanContractInstance.remainingAmount();
       console.log("Remaining Amt: " + remAmt);
       const nftContractInstance = new ethers.Contract(
@@ -141,6 +143,8 @@ const Profile = () => {
           loanContractAdd: res[i],
           nftAdd: nftContractAddress,
           nftTokenId: loanNftId,
+          loanLender: loanLender,
+          isActive: isActive,
         },
       ]);
     }

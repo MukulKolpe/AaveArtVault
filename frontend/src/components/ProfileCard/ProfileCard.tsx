@@ -1,5 +1,5 @@
 // @ts-nocheck comment
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Heading,
@@ -15,9 +15,13 @@ import {
   Container,
   VStack,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { Link } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+import GHOabi from "../../../utils/GHOabi.json";
+import Loanabi from "../../../utils/Loans.json";
+import { ethers } from "ethers";
 
 interface IBlogTags {
   tags: Array<string>;
@@ -67,6 +71,52 @@ const BlogAuthor = (props: BlogAuthorProps) => {
 };
 
 const ProfileCard = ({ loan }) => {
+  const [approvalFlag, setApprovalFlag] = useState(false);
+  const toast = useToast();
+
+  const approveGho = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const ghoInstance = new ethers.Contract(
+      "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60",
+      GHOabi,
+      signer
+    );
+    console.log(ghoInstance);
+    const paramAdd = loan.loanContractAdd;
+    const paramAmt = loan.loanAmt;
+    const tx = await ghoInstance.approve(paramAdd, paramAmt);
+    await tx.wait();
+    toast({
+      title: "GHO Approved",
+      description: "You have approved GHO tokens to the contract.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+    console.log("GHO Approved");
+    setApprovalFlag(true);
+  };
+
+  const makePayment = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const paramAdd = loan.loanContractAdd;
+    const contractInstance = new ethers.Contract(paramAdd, Loanabi, signer);
+    const lenderAdd = loan.loanLender;
+    const paramAmt = loan.loanAmt;
+    const tx = await contractInstance.makePayment(lenderAdd, paramAmt);
+    await tx.wait();
+    toast({
+      title: "Loan Paid Back",
+      description: "Your collateral NFT will be transferred back to you.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+    console.log("Loan Paid back");
+  };
+
   return (
     <Box
       marginTop={{ base: "1", sm: "5" }}
@@ -158,6 +208,16 @@ const ProfileCard = ({ loan }) => {
         >
           Expiration Date: {Number(loan.loanIntrestRate)}%
         </Text>
+        {!loan.isActive && (
+          <Text
+            as="p"
+            marginTop="2"
+            color={useColorModeValue("gray.700", "gray.200")}
+            fontSize="lg"
+          >
+            Lender: {loan.loanLender}
+          </Text>
+        )}
         <Text
           as="p"
           marginTop="2"
@@ -179,7 +239,16 @@ const ProfileCard = ({ loan }) => {
             View NFT <ExternalLinkIcon mx="2px" />
           </Link>
         </Button>
-        {loan.isActive && <Button mt={2}>Pay Now</Button>}
+        {!loan.isActive && !approvalFlag && (
+          <Button onClick={approveGho} mt={2}>
+            Approve GHO
+          </Button>
+        )}
+        {!loan.isActive && approvalFlag && (
+          <Button onClick={makePayment} mt={2}>
+            Pay Now
+          </Button>
+        )}
       </Box>
     </Box>
   );
